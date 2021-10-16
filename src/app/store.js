@@ -7,10 +7,12 @@ import { albumsApi } from 'features/albums/albumsAPI'
 import { commentsApi } from 'features/comments/commentsAPI'
 
 import usersSlice from 'features/users/usersSlice'
+import postsSlice from 'features/posts/postsSlice'
 
 export const store = configureStore({
   reducer: {
     user: usersSlice,
+    post: postsSlice,
     [usersApi.reducerPath]: usersApi.reducer,
     [postsApi.reducerPath]: postsApi.reducer,
     [albumsApi.reducerPath]: albumsApi.reducer,
