@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Grid, Spinner } from '@chakra-ui/react'
 
 import CommentItem from './CommentItem'
-import { useLazyGetCommentsQuery } from './commentsAPI'
+import { useLazyGetCommentsQuery } from '../commentsAPI'
 import { selectPostId } from 'features/posts/postsSlice'
 
 const PostList = () => {
