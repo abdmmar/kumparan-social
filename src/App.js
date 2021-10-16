@@ -2,8 +2,7 @@ import React from 'react'
 import { Container, Grid } from '@chakra-ui/react'
 
 import NavBar from 'components/NavBar'
-import UserList from 'features/users/UserList'
-import UserDetail from 'features/users/UserDetail'
+import { UserDetail, UserList } from 'features/users/components'
 
 function App() {
   return (
