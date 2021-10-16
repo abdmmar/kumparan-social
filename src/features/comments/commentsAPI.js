@@ -51,5 +51,10 @@ export const commentsApi = createApi({
   }),
 })
 
-export const { useGetCommentsQuery, useAddCommentMutation, useUpdateCommentMutation, useDeleteCommentMutation } =
-  commentsApi
+export const {
+  useGetCommentsQuery,
+  useLazyGetCommentsQuery,
+  useAddCommentMutation,
+  useUpdateCommentMutation,
+  useDeleteCommentMutation,
+} = commentsApi
