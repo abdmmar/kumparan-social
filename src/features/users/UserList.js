@@ -1,6 +1,7 @@
 import { Grid, Spinner } from '@chakra-ui/react'
 
 import { useGetUsersQuery } from 'features/users/usersAPI'
+
 import UserCard from 'features/users/UserCard'
 
 const UserList = () => {
@@ -15,6 +16,7 @@ const UserList = () => {
           return (
             <UserCard
               key={user.id}
+              id={user.id}
               name={user.name}
               username={user.username}
               email={user.email}
