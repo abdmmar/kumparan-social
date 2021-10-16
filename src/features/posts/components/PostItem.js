@@ -30,10 +30,13 @@ import { useDispatch } from 'react-redux'
 import { DotsHorizontalIcon } from '@heroicons/react/outline'
 
 import { CommentList } from 'features/comments/components'
-import { setPostId } from '../postsSlice'
+import { deletePost, setPostId } from '../postsSlice'
+import { useDeletePostMutation } from '../postsAPI'
 
 const PostItem = ({ id, title, body }) => {
   const dispatch = useDispatch()
+
+  const [deletePostMutation] = useDeletePostMutation()
   const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure()
 
   const [isOpen, setIsOpen] = React.useState(false)
@@ -44,6 +47,12 @@ const PostItem = ({ id, title, body }) => {
   const handleModalOpen = () => {
     onModalOpen()
     dispatch(setPostId(id))
+  }
+
+  const handleDeletePost = () => {
+    dispatch(deletePost(id))
+    deletePostMutation(id)
+    onClose()
   }
 
   return (
@@ -98,7 +107,7 @@ const PostItem = ({ id, title, body }) => {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme="red" onClick={onClose} ml={3}>
+              <Button colorScheme="red" onClick={handleDeletePost} ml={3}>
                 Delete
               </Button>
             </AlertDialogFooter>
