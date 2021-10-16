@@ -2,10 +2,10 @@ import { useSelector } from 'react-redux'
 import { Flex, Grid, Icon, Image, Text, Tabs, TabList, TabPanels, Tab, TabPanel, Spinner } from '@chakra-ui/react'
 import { OfficeBuildingIcon, GlobeAltIcon, MailIcon, PhoneIcon, MapIcon } from '@heroicons/react/outline'
 
-import AlbumList from 'features/albums/AlbumList'
-import PostList from 'features/posts/PostList'
-import { selectUser } from './usersAPI'
-import { selectUserId } from './usersSlice'
+import { AlbumList } from 'features/albums/components'
+import { PostList } from 'features/posts/components'
+import { selectUser } from '../usersAPI'
+import { selectUserId } from '../usersSlice'
 
 const UserDetail = () => {
   // Get userId from UserCard

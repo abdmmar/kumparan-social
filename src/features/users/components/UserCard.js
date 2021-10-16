@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux'
 import { Flex, Grid, Icon, Text } from '@chakra-ui/react'
 import { GlobeAltIcon, MailIcon, PhoneIcon } from '@heroicons/react/outline'
 
-import { useLazyGetUserQuery } from './usersAPI'
-import { setUserId } from './usersSlice'
+import { useLazyGetUserQuery } from '../usersAPI'
+import { setUserId } from '../usersSlice'
 
 const CardUser = ({ id, name, username, website, email, phone }) => {
   const dispatch = useDispatch()

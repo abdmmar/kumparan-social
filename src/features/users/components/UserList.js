@@ -2,7 +2,7 @@ import { Grid, Spinner } from '@chakra-ui/react'
 
 import { useGetUsersQuery } from 'features/users/usersAPI'
 
-import UserCard from 'features/users/UserCard'
+import { UserCard } from 'features/users/components'
 
 const UserList = () => {
   const { data: usersData, error: usersError, isLoading: isUsersLoading } = useGetUsersQuery()
