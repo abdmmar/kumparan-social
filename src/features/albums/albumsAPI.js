@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-export const usersApi = createApi({
-  reducerPath: 'usersApi',
+export const albumsApi = createApi({
+  reducerPath: 'albumsApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://jsonplaceholder.typicode.com',
   }),
@@ -20,4 +20,5 @@ export const usersApi = createApi({
   }),
 })
 
-export const { useGetUsersQuery, useGetUserQuery } = usersApi
+export const { useGetAlbumsQuery, useLazyGetAlbumsQuery, useGetPhotosQuery, useLazyGetPhotosQuery, useGetPhotoQuery } =
+  albumsApi
