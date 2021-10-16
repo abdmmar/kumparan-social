@@ -1,4 +1,5 @@
 import * as React from 'react'
+import PropTypes from 'prop-types'
 import {
   AlertDialog,
   AlertDialogBody,
@@ -18,7 +19,7 @@ import {
 } from '@chakra-ui/react'
 import { DotsHorizontalIcon } from '@heroicons/react/outline'
 
-const Comment = () => {
+const CommentItem = ({ id, name, email, body }) => {
   const [isOpen, setIsOpen] = React.useState(false)
   const cancelRef = React.useRef()
 
@@ -29,8 +30,8 @@ const Comment = () => {
       <Grid padding="4" gap="4" autoFlow="row" border="1px solid gray" rounded="sm" borderColor="gray.200">
         <Flex direction="row" justifyContent="space-between" alignItems="flex-start">
           <Flex direction="column">
-            <Text as="strong">Name</Text>
-            <Text as="small">Email</Text>
+            <Text as="strong">{name}</Text>
+            <Text as="small">{email}</Text>
           </Flex>
           <Menu placement="bottom-end">
             <MenuButton as={IconButton} size="xs" aria-label="Options" icon={<DotsHorizontalIcon />} variant="none" />
@@ -40,7 +41,7 @@ const Comment = () => {
             </MenuList>
           </Menu>
         </Flex>
-        <Text>Body</Text>
+        <Text>{body}</Text>
       </Grid>
 
       <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
@@ -69,4 +70,11 @@ const Comment = () => {
   )
 }
 
-export default Comment
+CommentItem.propTypes = {
+  id: PropTypes.number,
+  name: PropTypes.string,
+  email: PropTypes.string,
+  body: PropTypes.string,
+}
+
+export default CommentItem
