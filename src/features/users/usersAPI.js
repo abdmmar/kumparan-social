@@ -18,4 +18,6 @@ export const usersApi = createApi({
   }),
 })
 
-export const { useGetUsersQuery, useGetUserQuery } = usersApi
+export const selectUser = (id) => usersApi.endpoints.getUser.select(id)
+
+export const { useGetUsersQuery, useGetUserQuery, useLazyGetUserQuery } = usersApi
