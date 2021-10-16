@@ -29,8 +29,8 @@ import {
 import { useDispatch } from 'react-redux'
 import { DotsHorizontalIcon } from '@heroicons/react/outline'
 
-import CommentList from 'features/comments/CommentList'
-import { setPostId } from './postsSlice'
+import { CommentList } from 'features/comments/components'
+import { setPostId } from '../postsSlice'
 
 const PostItem = ({ id, title, body }) => {
   const dispatch = useDispatch()

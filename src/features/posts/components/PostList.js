@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Grid, Spinner } from '@chakra-ui/react'
 
 import PostItem from './PostItem'
-import { useLazyGetPostsQuery } from './postsAPI'
+import { useLazyGetPostsQuery } from '../postsAPI'
 import { selectUserId } from 'features/users/usersSlice'
 
 const PostList = () => {
