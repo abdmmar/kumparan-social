@@ -8,7 +8,7 @@ const UserList = () => {
   const { data: usersData, error: usersError, isLoading: isUsersLoading } = useGetUsersQuery()
 
   return (
-    <Grid gap="4">
+    <Grid gap="4" height="fit-content">
       {usersError && 'Oh no, there was an error'}
       {isUsersLoading && <Spinner />}
       {usersData &&
