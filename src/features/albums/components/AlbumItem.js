@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { Box, Grid, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Spinner } from '@chakra-ui/react'
 
 import AlbumThumbnail from './AlbumThumbnail'
-import { useGetPhotosQuery } from './albumsAPI'
+import { useGetPhotosQuery } from '../albumsAPI'
 
 const AlbumItem = ({ id, title }) => {
   const { data, error, isLoading } = useGetPhotosQuery(id)
