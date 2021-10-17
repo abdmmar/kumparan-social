@@ -11,7 +11,7 @@ const PostModalEdit = ({ data, isOpen, onClose }) => {
         <ModalHeader marginRight="5">{data.title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <PostEditForm data={data} />
+          <PostEditForm data={data} onClose={onClose} />
         </ModalBody>
       </ModalContent>
     </Modal>
