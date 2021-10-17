@@ -17,13 +17,26 @@ import {
   MenuList,
   MenuItem,
 } from '@chakra-ui/react'
+import { useDispatch } from 'react-redux'
 import { DotsHorizontalIcon } from '@heroicons/react/outline'
 
+import { deleteComment } from '../commentsSlice'
+import { useDeleteCommentMutation } from '../commentsAPI'
+
 const CommentItem = ({ id, name, email, body }) => {
+  const dispatch = useDispatch()
+  const [deleteCommentMutation] = useDeleteCommentMutation()
+
   const [isOpen, setIsOpen] = React.useState(false)
   const cancelRef = React.useRef()
 
   const onClose = () => setIsOpen(false)
+
+  const handleDeleteComment = () => {
+    dispatch(deleteComment(id))
+    deleteCommentMutation(id)
+    onClose()
+  }
 
   return (
     <>
@@ -59,7 +72,7 @@ const CommentItem = ({ id, name, email, body }) => {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme="red" onClick={onClose} ml={3}>
+              <Button colorScheme="red" onClick={handleDeleteComment} ml={3}>
                 Delete
               </Button>
             </AlertDialogFooter>

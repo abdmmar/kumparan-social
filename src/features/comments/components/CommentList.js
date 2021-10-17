@@ -4,10 +4,13 @@ import { Grid, Spinner } from '@chakra-ui/react'
 
 import CommentItem from './CommentItem'
 import { useLazyGetCommentsQuery } from '../commentsAPI'
+import { selectAllComments, selectAllDeletedcomments } from '../commentsSlice'
 import { selectPostId } from 'features/posts/postsSlice'
 
 const PostList = () => {
   const postId = useSelector(selectPostId)
+  const comments = useSelector(selectAllComments)
+  const deletedComments = useSelector(selectAllDeletedcomments)
   const [trigger, { data, error, isLoading }] = useLazyGetCommentsQuery(postId)
 
   React.useEffect(() => {
@@ -19,7 +22,9 @@ const PostList = () => {
       {error && 'Oh no, there was an error'}
       {isLoading && <Spinner />}
       {data &&
-        data.map((comment) => {
+        comments.map((comment) => {
+          if (deletedComments.includes(comment.id)) return null
+
           return (
             <CommentItem
               key={comment.id}
