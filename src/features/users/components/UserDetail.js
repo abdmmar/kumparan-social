@@ -3,7 +3,7 @@ import { Flex, Grid, Icon, Image, Text, Tabs, TabList, TabPanels, Tab, TabPanel,
 import { OfficeBuildingIcon, GlobeAltIcon, MailIcon, PhoneIcon, MapIcon } from '@heroicons/react/outline'
 
 import { AlbumList } from 'features/albums/components'
-import { PostList } from 'features/posts/components'
+import { PostList, PostAddForm } from 'features/posts/components'
 import { selectUser } from '../usersAPI'
 import { selectUserId } from '../usersSlice'
 
@@ -64,6 +64,7 @@ const UserDetail = () => {
 
             <TabPanels>
               <TabPanel padding="0" marginTop="4">
+                <PostAddForm />
                 <PostList />
               </TabPanel>
               <TabPanel padding="0" marginTop="4">
