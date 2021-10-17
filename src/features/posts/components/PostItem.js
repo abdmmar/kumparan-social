@@ -78,7 +78,7 @@ const PostItem = ({ id, title, body }) => {
       <Modal isOpen={isModalOpen} onClose={onModalClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader marginRight="5">{title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <CommentList />
