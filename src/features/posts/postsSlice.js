@@ -22,6 +22,7 @@ const postsSlice = createSlice({
     })
 
     build.addMatcher(postsApi.endpoints.addPost.matchFulfilled, (state, { payload }) => {
+      payload.id = payload.id + Math.ceil(Math.random(100) * 100)
       state.posts = [payload, ...state.posts]
     })
 
