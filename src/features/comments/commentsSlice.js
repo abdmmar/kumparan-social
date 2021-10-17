@@ -43,7 +43,7 @@ const commentsSlice = createSlice({
 export const { deleteComment, updateLocalComment } = commentsSlice.actions
 
 export const selectAllComments = (state) => state.comment.comments
-export const selectAllLocalComments = (state) => state.post.localComments
+export const selectAllLocalComments = (state) => state.comment.localComments
 export const selectAllDeletedComments = (state) => state.comment.deletedCommentsId
 
 export default commentsSlice.reducer
