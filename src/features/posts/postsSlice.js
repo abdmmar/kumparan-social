@@ -19,8 +19,10 @@ const postsSlice = createSlice({
     updateLocalPost: (state, { payload }) => {
       let posts = [...state.posts]
       let index = posts.findIndex((post) => post.id === parseInt(payload.id))
-      posts.splice(index, 1, payload)
-      state.posts = posts
+      if (index !== -1) {
+        posts.splice(index, 1, payload)
+        state.posts = posts
+      }
     },
   },
   extraReducers: (build) => {

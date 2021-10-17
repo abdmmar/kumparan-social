@@ -15,8 +15,11 @@ const commentsSlice = createSlice({
     updateLocalComment: (state, { payload }) => {
       let comments = [...state.comments]
       let index = comments.findIndex((comment) => comment.id === parseInt(payload.id))
-      comments.splice(index, 1, payload)
-      state.comments = comments
+
+      if (index !== -1) {
+        comments.splice(index, 1, payload)
+        state.comments = comments
+      }
     },
   },
   extraReducers: (build) => {
