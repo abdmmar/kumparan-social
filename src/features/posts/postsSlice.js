@@ -6,6 +6,7 @@ const postsSlice = createSlice({
   initialState: {
     postId: -1,
     posts: [],
+    localPosts: [],
     deletedPostsId: [],
   },
   reducers: {
@@ -15,6 +16,12 @@ const postsSlice = createSlice({
     deletePost: (state, { payload }) => {
       state.deletedPostsId = [...state.deletedPostsId, payload]
     },
+    updateLocalPost: (state, { payload }) => {
+      let posts = [...state.posts]
+      let index = posts.findIndex((post) => post.id === parseInt(payload.id))
+      posts.splice(index, 1, payload)
+      state.posts = posts
+    },
   },
   extraReducers: (build) => {
     build.addMatcher(postsApi.endpoints.getPosts.matchFulfilled, (state, { payload }) => {
@@ -23,6 +30,8 @@ const postsSlice = createSlice({
 
     build.addMatcher(postsApi.endpoints.addPost.matchFulfilled, (state, { payload }) => {
       payload.id = payload.id + Math.ceil(Math.random(100) * 100)
+
+      state.localPosts = [payload.id, ...state.localPosts]
       state.posts = [payload, ...state.posts]
     })
 
@@ -35,10 +44,11 @@ const postsSlice = createSlice({
   },
 })
 
-export const { setPostId, deletePost } = postsSlice.actions
+export const { setPostId, deletePost, updateLocalPost } = postsSlice.actions
 
 export const selectPostId = (state) => state.post.postId
 export const selectAllDeletedPosts = (state) => state.post.deletedPostsId
 export const selectAllPosts = (state) => state.post.posts
+export const selectAllLocalPosts = (state) => state.post.localPosts
 
 export default postsSlice.reducer
