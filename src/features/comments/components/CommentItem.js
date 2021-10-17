@@ -1,27 +1,14 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay,
-  IconButton,
-  Button,
-  Grid,
-  Flex,
-  Text,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-} from '@chakra-ui/react'
+import { IconButton, Grid, Flex, Text, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
+import { useDisclosure } from '@chakra-ui/hooks'
 import { DotsHorizontalIcon } from '@heroicons/react/outline'
 
 import CommentAlertDelete from './CommentAlertDelete'
+import CommentModalEdit from './CommentModalEdit'
 
 const CommentItem = ({ id, name, email, body }) => {
+  const modalEditComment = useDisclosure()
   const [isOpen, setIsOpen] = React.useState(false)
 
   const onClose = () => setIsOpen(false)
@@ -38,13 +25,19 @@ const CommentItem = ({ id, name, email, body }) => {
           <Menu placement="bottom-end">
             <MenuButton as={IconButton} size="xs" aria-label="Options" icon={<DotsHorizontalIcon />} variant="none" />
             <MenuList>
-              <MenuItem onClick={() => alert('Edit Comment')}>Edit Comment</MenuItem>
+              <MenuItem onClick={modalEditComment.onOpen}>Edit Comment</MenuItem>
               <MenuItem onClick={onOpen}>Delete Comment</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
         <Text>{body}</Text>
       </Grid>
+
+      <CommentModalEdit
+        data={{ id, name, email, body }}
+        isOpen={modalEditComment.isOpen}
+        onClose={modalEditComment.onClose}
+      />
 
       <CommentAlertDelete id={id} isOpen={isOpen} onClose={onClose} />
     </>
