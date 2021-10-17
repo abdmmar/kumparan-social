@@ -1,12 +1,6 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay,
   IconButton,
   Button,
   Divider,
@@ -30,29 +24,26 @@ import { useDispatch } from 'react-redux'
 import { DotsHorizontalIcon } from '@heroicons/react/outline'
 
 import { CommentList } from 'features/comments/components'
-import { deletePost, setPostId } from '../postsSlice'
-import { useDeletePostMutation } from '../postsAPI'
+import { setPostId } from '../postsSlice'
+import PostModalEdit from './PostModalEdit'
+import PostAlertDelete from './PostAlertDelete'
 
 const PostItem = ({ id, title, body }) => {
   const dispatch = useDispatch()
+  const modalComment = useDisclosure()
+  const modalEditComment = useDisclosure()
 
-  const [deletePostMutation] = useDeletePostMutation()
-  const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure()
+  const [isAlertOpen, setIsAlertOpen] = React.useState(false)
+  const onAlertClose = () => setIsAlertOpen(false)
+  const onAlertOpen = () => setIsAlertOpen(true)
 
-  const [isOpen, setIsOpen] = React.useState(false)
-  const cancelRef = React.useRef()
-
-  const onClose = () => setIsOpen(false)
-
-  const handleModalOpen = () => {
-    onModalOpen()
+  const handleModalCommentOpen = () => {
+    modalComment.onOpen()
     dispatch(setPostId(id))
   }
 
-  const handleDeletePost = () => {
-    dispatch(deletePost(id))
-    deletePostMutation(id)
-    onClose()
+  const handleModalEditCommentOpen = () => {
+    modalEditComment.onOpen()
   }
 
   return (
@@ -63,19 +54,19 @@ const PostItem = ({ id, title, body }) => {
           <Menu placement="bottom-end">
             <MenuButton as={IconButton} size="xs" aria-label="Options" icon={<DotsHorizontalIcon />} variant="none" />
             <MenuList>
-              <MenuItem onClick={() => alert('Edit Post')}>Edit Post</MenuItem>
-              <MenuItem onClick={() => setIsOpen(true)}>Delete Post</MenuItem>
+              <MenuItem onClick={handleModalEditCommentOpen}>Edit Post</MenuItem>
+              <MenuItem onClick={onAlertOpen}>Delete Post</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
         <Text>{body}</Text>
         <Divider />
-        <Button onClick={handleModalOpen} cursor="pointer">
+        <Button onClick={handleModalCommentOpen} cursor="pointer">
           <Text>See all comments</Text>
         </Button>
       </Grid>
 
-      <Modal isOpen={isModalOpen} onClose={onModalClose}>
+      <Modal isOpen={modalComment.isOpen} onClose={modalComment.onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader marginRight="5">{title}</ModalHeader>
@@ -85,35 +76,16 @@ const PostItem = ({ id, title, body }) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onModalClose}>
+            <Button colorScheme="blue" mr={3} onClick={modalComment.onClose}>
               Add Comment
             </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
 
-      <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Delete Post
-            </AlertDialogHeader>
+      <PostModalEdit data={{ id, title, body }} isOpen={modalEditComment.isOpen} onClose={modalEditComment.onClose} />
 
-            <AlertDialogBody>
-              Are you sure want to delete this post? You cant undo this action afterwards.
-            </AlertDialogBody>
-
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button colorScheme="red" onClick={handleDeletePost} ml={3}>
-                Delete
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
+      <PostAlertDelete id={id} isOpen={isAlertOpen} onClose={onAlertClose} />
     </>
   )
 }
