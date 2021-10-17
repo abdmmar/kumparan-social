@@ -20,13 +20,9 @@ export const postsApi = createApi({
         return {
           url: '/posts',
           method: 'POST',
-          body: JSON.stringify(data),
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-          },
+          body: data,
         }
       },
-      invalidatesTags: ['Posts'],
     }),
     updatePost: build.mutation({
       query: (data) => {
@@ -34,10 +30,7 @@ export const postsApi = createApi({
         return {
           url: `/posts/${id}`,
           method: 'PUT',
-          body: JSON.stringify(body),
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-          },
+          body: body,
         }
       },
       invalidatesTags: (result, error, { id }) => [{ type: 'Post', id }],
