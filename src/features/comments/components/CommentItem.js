@@ -17,26 +17,15 @@ import {
   MenuList,
   MenuItem,
 } from '@chakra-ui/react'
-import { useDispatch } from 'react-redux'
 import { DotsHorizontalIcon } from '@heroicons/react/outline'
 
-import { deleteComment } from '../commentsSlice'
-import { useDeleteCommentMutation } from '../commentsAPI'
+import CommentAlertDelete from './CommentAlertDelete'
 
 const CommentItem = ({ id, name, email, body }) => {
-  const dispatch = useDispatch()
-  const [deleteCommentMutation] = useDeleteCommentMutation()
-
   const [isOpen, setIsOpen] = React.useState(false)
-  const cancelRef = React.useRef()
 
   const onClose = () => setIsOpen(false)
-
-  const handleDeleteComment = () => {
-    dispatch(deleteComment(id))
-    deleteCommentMutation(id)
-    onClose()
-  }
+  const onOpen = () => setIsOpen(true)
 
   return (
     <>
@@ -50,35 +39,14 @@ const CommentItem = ({ id, name, email, body }) => {
             <MenuButton as={IconButton} size="xs" aria-label="Options" icon={<DotsHorizontalIcon />} variant="none" />
             <MenuList>
               <MenuItem onClick={() => alert('Edit Comment')}>Edit Comment</MenuItem>
-              <MenuItem onClick={() => setIsOpen(true)}>Delete Comment</MenuItem>
+              <MenuItem onClick={onOpen}>Delete Comment</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
         <Text>{body}</Text>
       </Grid>
 
-      <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Delete Comment
-            </AlertDialogHeader>
-
-            <AlertDialogBody>
-              Are you sure want to delete this comment? You cant undo this action afterwards.
-            </AlertDialogBody>
-
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button colorScheme="red" onClick={handleDeleteComment} ml={3}>
-                Delete
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
+      <CommentAlertDelete id={id} isOpen={isOpen} onClose={onClose} />
     </>
   )
 }
