@@ -22,7 +22,9 @@ const CardUser = ({ id, name, username, email }) => {
 
   return (
     <Grid autoFlow="row" gap="2" padding="4" boxShadow="md" rounded="sm" onClick={handleClick} cursor="pointer">
-      <Text as="strong">{name}</Text>
+      <Text as="strong" data-testid={`user-${id}`}>
+        {name}
+      </Text>
       <Flex direction="row" gridGap="2" alignItems="center">
         <Text as="small">
           @{username} •{' '}
