@@ -30,7 +30,7 @@ import PostAlertDelete from './PostAlertDelete'
 const PostItem = ({ id, title, body }) => {
   const dispatch = useDispatch()
   const modalComment = useDisclosure()
-  const modalEditComment = useDisclosure()
+  const modalEditPost = useDisclosure()
 
   const [isAlertOpen, setIsAlertOpen] = React.useState(false)
   const onAlertClose = () => setIsAlertOpen(false)
@@ -41,8 +41,8 @@ const PostItem = ({ id, title, body }) => {
     dispatch(setPostId(id))
   }
 
-  const handleModalEditCommentOpen = () => {
-    modalEditComment.onOpen()
+  const handleModalEditPostOpen = () => {
+    modalEditPost.onOpen()
   }
 
   return (
@@ -53,7 +53,7 @@ const PostItem = ({ id, title, body }) => {
           <Menu placement="bottom-end">
             <MenuButton as={IconButton} size="xs" aria-label="Options" icon={<DotsHorizontalIcon />} variant="none" />
             <MenuList>
-              <MenuItem onClick={handleModalEditCommentOpen}>Edit Post</MenuItem>
+              <MenuItem onClick={handleModalEditPostOpen}>Edit Post</MenuItem>
               <MenuItem onClick={onAlertOpen}>Delete Post</MenuItem>
             </MenuList>
           </Menu>
@@ -77,7 +77,7 @@ const PostItem = ({ id, title, body }) => {
         </ModalContent>
       </Modal>
 
-      <PostModalEdit data={{ id, title, body }} isOpen={modalEditComment.isOpen} onClose={modalEditComment.onClose} />
+      <PostModalEdit data={{ id, title, body }} isOpen={modalEditPost.isOpen} onClose={modalEditPost.onClose} />
 
       <PostAlertDelete id={id} isOpen={isAlertOpen} onClose={onAlertClose} />
     </>
