@@ -1,6 +1,6 @@
 import * as Yup from 'yup'
 import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Field, Form, Formik } from 'formik'
 import { Input } from '@chakra-ui/input'
 import { Button } from '@chakra-ui/button'
@@ -9,17 +9,27 @@ import { FormControl, FormErrorMessage } from '@chakra-ui/form-control'
 
 import { useUpdatePostMutation } from '../postsAPI'
 import { selectUserId } from 'features/users/usersSlice'
+import { selectAllLocalPosts, updateLocalPost } from '../postsSlice'
 
-const PostEditForm = ({ data }) => {
+const PostEditForm = ({ data, onClose }) => {
   const { id, title, body } = data
 
+  const dispatch = useDispatch()
   const userId = useSelector(selectUserId)
+  const localPosts = useSelector(selectAllLocalPosts)
   const [updatePost, { isLoading }] = useUpdatePostMutation()
 
   const handleEditPost = async (value) => {
     value.id = id
     value.userId = userId
-    await updatePost(value)
+
+    if (localPosts.includes(id)) {
+      dispatch(updateLocalPost(value))
+    } else {
+      await updatePost(value)
+    }
+
+    if (isLoading === false) onClose()
   }
 
   return (
@@ -65,6 +75,7 @@ PostEditForm.propTypes = {
     title: PropTypes.string,
     body: PropTypes.string,
   }),
+  onClose: PropTypes.func,
 }
 
 export default PostEditForm
