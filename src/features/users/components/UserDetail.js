@@ -1,6 +1,27 @@
 import { useSelector } from 'react-redux'
-import { Flex, Grid, Icon, Image, Text, Tabs, TabList, TabPanels, Tab, TabPanel, Spinner } from '@chakra-ui/react'
-import { OfficeBuildingIcon, GlobeAltIcon, MailIcon, PhoneIcon, MapIcon } from '@heroicons/react/outline'
+import {
+  Flex,
+  Grid,
+  Heading,
+  Icon,
+  Image,
+  Link,
+  Text,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Spinner,
+} from '@chakra-ui/react'
+import {
+  OfficeBuildingIcon,
+  GlobeAltIcon,
+  IdentificationIcon,
+  MailIcon,
+  PhoneIcon,
+  MapIcon,
+} from '@heroicons/react/outline'
 
 import { AlbumList } from 'features/albums/components'
 import { PostList, PostAddForm } from 'features/posts/components'
@@ -14,7 +35,13 @@ const UserDetail = () => {
   const { data, error, isLoading, isSuccess } = useSelector(selectUser(userId !== -1 && userId))
 
   return (
-    <>
+    <Grid autoFlow="row" height="fit-content" gap="5">
+      <Flex direction="row" gridGap="2" alignItems="center">
+        <Icon as={IdentificationIcon} width="6" height="6" />
+        <Heading as="h3" size="md">
+          User Profile
+        </Heading>
+      </Flex>
       {error && 'Oh no, there was something wrong'}
       {isLoading && <Spinner />}
       {isSuccess && data && (
@@ -29,24 +56,44 @@ const UserDetail = () => {
                 alt={data.name}
               />
               <Flex direction="column" gap="1">
-                <Text as="strong">{data.name}</Text>
-                <Text as="i">{data.username}</Text>
+                <Flex direction="row" gridGap="2" alignItems="center">
+                  <Text as="strong">{data.name}</Text>
+                  <Text as="small">@{data.username}</Text>
+                </Flex>
                 <Flex direction="row" gridGap="2" alignItems="center">
                   <Icon as={GlobeAltIcon} />
-                  <Text>{data.website}</Text>
+                  <Text>
+                    <Link color="blue.500" href={`http://www.${data.website}`} isExternal>
+                      {data.website}
+                    </Link>
+                  </Text>
                 </Flex>
                 <Flex direction="row" gridGap="2" alignItems="center">
                   <Icon as={MailIcon} />
-                  <Text>{data.email}</Text>
+                  <Text>
+                    <Link color="blue.500" href={`mailto:${data.email}`} isExternal>
+                      {data.email}
+                    </Link>
+                  </Text>
                 </Flex>
                 <Flex direction="row" gridGap="2" alignItems="center">
                   <Icon as={PhoneIcon} />
-                  <Text>{data.phone}</Text>
+                  <Text>
+                    <Link color="blue.500" href={`tel:${data.phone}`} isExternal>
+                      {data.phone}
+                    </Link>
+                  </Text>
                 </Flex>
                 <Flex direction="row" gridGap="2" alignItems="center">
                   <Icon as={MapIcon} />
                   <Text>
-                    {data.address.suite}, {data.address.street}, {data.address.city} {data.address.zipcode}
+                    <Link
+                      color="blue.500"
+                      href={`https://www.google.com/maps?q=${data.address.geo.lat},${data.address.geo.lng}`}
+                      isExternal
+                    >
+                      {data.address.suite}, {data.address.street}, {data.address.city} {data.address.zipcode}
+                    </Link>
                   </Text>
                 </Flex>
                 <Flex direction="row" gridGap="2" alignItems="center">
@@ -74,7 +121,7 @@ const UserDetail = () => {
           </Tabs>
         </Grid>
       )}
-    </>
+    </Grid>
   )
 }
 
