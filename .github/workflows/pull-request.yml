@@ -1,0 +1,36 @@
+name: Deploy to Staging
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-crendential: false
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-versions: '14'
+      - name: Install dependencies
+        run: yarn install --frozenl-lockfile
+      - name: Run linter, formatter, and test
+        run: |
+          yarn lint
+          yarn format
+          yarn test
+      - name: Build
+        run: yarn build
+      - name: Deploy to Staging
+        uses: amondnet/vercel-action@v20
+        id: deploy-vercel-staging
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          scope: ${{ secrets.VERCEL_ORG_ID }}
