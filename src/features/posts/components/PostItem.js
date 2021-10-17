@@ -16,14 +16,13 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
 } from '@chakra-ui/react'
 import { useDispatch } from 'react-redux'
 import { DotsHorizontalIcon } from '@heroicons/react/outline'
 
-import { CommentList } from 'features/comments/components'
+import { CommentList, CommentAddForm } from 'features/comments/components'
 import { setPostId } from '../postsSlice'
 import PostModalEdit from './PostModalEdit'
 import PostAlertDelete from './PostAlertDelete'
@@ -73,13 +72,8 @@ const PostItem = ({ id, title, body }) => {
           <ModalCloseButton />
           <ModalBody>
             <CommentList />
+            <CommentAddForm />
           </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={modalComment.onClose}>
-              Add Comment
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
 
