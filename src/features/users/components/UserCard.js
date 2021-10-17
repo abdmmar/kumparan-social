@@ -1,15 +1,19 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-import { Flex, Grid, Icon, Text } from '@chakra-ui/react'
-import { GlobeAltIcon, MailIcon, PhoneIcon } from '@heroicons/react/outline'
+import { Flex, Grid, Text, Link } from '@chakra-ui/react'
 
 import { useLazyGetUserQuery } from '../usersAPI'
 import { setUserId } from '../usersSlice'
 
-const CardUser = ({ id, name, username, website, email, phone }) => {
+const CardUser = ({ id, name, username, email }) => {
   const dispatch = useDispatch()
   const [trigger] = useLazyGetUserQuery(id)
+
+  React.useEffect(() => {
+    trigger(id)
+    dispatch(setUserId(id))
+  }, [])
 
   const handleClick = () => {
     trigger(id)
@@ -19,18 +23,13 @@ const CardUser = ({ id, name, username, website, email, phone }) => {
   return (
     <Grid autoFlow="row" gap="2" padding="4" boxShadow="md" rounded="sm" onClick={handleClick} cursor="pointer">
       <Text as="strong">{name}</Text>
-      <Text as="i">@{username}</Text>
       <Flex direction="row" gridGap="2" alignItems="center">
-        <Icon as={GlobeAltIcon} />
-        <Text>{website}</Text>
-      </Flex>
-      <Flex direction="row" gridGap="2" alignItems="center">
-        <Icon as={MailIcon} />
-        <Text>{email}</Text>
-      </Flex>
-      <Flex direction="row" gridGap="2" alignItems="center">
-        <Icon as={PhoneIcon} />
-        <Text>{phone}</Text>
+        <Text as="small">
+          @{username} •{' '}
+          <Link color="blue.500" href={`mailto:${email}`} isExternal>
+            {email}
+          </Link>
+        </Text>
       </Flex>
     </Grid>
   )
