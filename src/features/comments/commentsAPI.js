@@ -17,13 +17,9 @@ export const commentsApi = createApi({
         return {
           url: `/posts/${id}/comments`,
           method: 'POST',
-          body: JSON.stringify(body),
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-          },
+          body: body,
         }
       },
-      invalidatesTags: ['Comments'],
     }),
     updateComment: build.mutation({
       query: (data) => {
@@ -31,10 +27,7 @@ export const commentsApi = createApi({
         return {
           url: `/comments/${id}`,
           method: 'PUT',
-          body: JSON.stringify(body),
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-          },
+          body: body,
         }
       },
       invalidatesTags: (result, error, { id }) => [{ type: 'Comments', id }],
@@ -46,7 +39,7 @@ export const commentsApi = createApi({
           method: 'DELETE',
         }
       },
-      invalidatesTags: ['Comments'],
+      invalidatesTags: (result, error, id) => [{ type: 'Comments', id }],
     }),
   }),
 })
