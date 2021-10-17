@@ -5,7 +5,7 @@ import { useGetUsersQuery } from 'features/users/usersAPI'
 import { UserCard } from 'features/users/components'
 
 const UserList = () => {
-  const { data: usersData, error: usersError, isLoading: isUsersLoading } = useGetUsersQuery()
+  const { data, error, isLoading } = useGetUsersQuery()
 
   return (
     <Grid autoFlow="row" height="fit-content" gap="5">
@@ -16,10 +16,10 @@ const UserList = () => {
         </Heading>
       </Flex>
       <Grid gap="4" height="fit-content">
-        {usersError && 'Oh no, there was an error'}
-        {isUsersLoading && <Spinner />}
-        {usersData &&
-          usersData.map((user) => {
+        {error && 'Oh no, there was an error'}
+        {isLoading && <Spinner />}
+        {data &&
+          data.map((user) => {
             return <UserCard key={user.id} id={user.id} name={user.name} username={user.username} email={user.email} />
           })}
       </Grid>
