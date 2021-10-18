@@ -38,7 +38,7 @@ const UserDetail = () => {
     <Grid autoFlow="row" height="fit-content" gap="5">
       <Flex direction="row" gridGap="2" alignItems="center">
         <Icon as={IdentificationIcon} width="6" height="6" />
-        <Heading as="h3" size="md">
+        <Heading as="h3" size="md" id="user-profile">
           User Profile
         </Heading>
       </Flex>
@@ -47,9 +47,9 @@ const UserDetail = () => {
       {isSuccess && data && (
         <Grid padding="4" boxShadow="lg" height="fit-content" gap="5" rounded="sm">
           <Grid autoFlow="row" gap="5" height="fit-content">
-            <Flex direction="row" gridGap="4" alignItems="end">
+            <Flex direction={{ base: 'column', lg: 'row' }} gridGap="4" alignItems={{ base: 'start', lg: 'end' }}>
               <Image
-                boxSize="190px"
+                boxSize={{ base: '80px', lg: '190px' }}
                 objectFit="cover"
                 rounded="md"
                 src="https://via.placeholder.com/190"

@@ -18,6 +18,7 @@ const CardUser = ({ id, name, username, email }) => {
   const handleClick = () => {
     trigger(id)
     dispatch(setUserId(id)) // Manually set userId to use in UserDetail component
+    document.getElementById('user-profile').scrollIntoView({ behavior: 'smooth' })
   }
 
   return (

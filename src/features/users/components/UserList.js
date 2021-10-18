@@ -15,7 +15,7 @@ const UserList = () => {
           Users
         </Heading>
       </Flex>
-      <Grid gap="4" height="fit-content">
+      <Grid gap="4" templateColumns="1fr" height="fit-content">
         {error && 'Oh no, there was an error'}
         {isLoading && <Spinner />}
         {data &&

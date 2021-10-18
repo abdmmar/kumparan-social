@@ -9,7 +9,7 @@ function App() {
     <Container maxWidth="container.lg">
       <NavBar />
       <Divider />
-      <Grid as="main" templateColumns="35% 1fr" gap="4" marginBlock="10">
+      <Grid as="main" templateColumns={{ sm: '1fr', lg: '35% 1fr' }} gap="4" marginBlock="10">
         <UserList />
         <UserDetail />
       </Grid>
